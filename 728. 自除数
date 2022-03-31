@@ -1,0 +1,22 @@
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* selfDividingNumbers(int left, int right, int* returnSize){
+    int *results=(int *)malloc(sizeof(int)*(right-left+1));
+    (*returnSize)=0;
+    int i,tmp,base;
+    for(i=left;i<=right;i++)
+    {
+        tmp=i;
+        while(tmp)
+        {
+            base=tmp%10;
+            if(base==0) break;//结束条件
+            if(i%base!=0) break;//不符合条件
+            tmp=tmp/10;
+        }
+        if(tmp==0) results[(*returnSize)++]=i;
+    }
+
+    return results;
+}
