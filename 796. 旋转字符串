@@ -1,0 +1,51 @@
+题目：
+给定两个字符串, s 和 goal。如果在若干次旋转操作之后，s 能变成 goal ，那么返回 true 。
+s 的旋转操作就是将 s 最左边的字符移动到最右边。 
+
+例如, 若 s = 'abcde'，在旋转一次之后结果就是'bcdea' 。
+ 
+示例 1:
+输入: s = "abcde", goal = "cdeab"
+输出: true
+
+示例 2:
+输入: s = "abcde", goal = "abced"
+输出: false
+ 
+提示:
+1 <= s.length, goal.length <= 100
+s 和 goal 由小写英文字母组成
+
+代码：
+bool rotateString(char * s, char * goal){
+    //长度
+    int len;
+    len = strlen(s);//求s长度
+    //头指针
+    int left = 0;
+    //临时变量
+    int i = 0, j;
+    //完成标志
+    int flag = 1;
+
+    if(len != strlen(goal)) return false;
+
+    while ((i++) < len)
+    {
+        //判断s和goal是否相等
+        for (j = 0, flag = 1; j < len; j++)
+        {
+            if (s[(left + j) % len] != goal[j])
+            {
+                flag = 0;
+                break;    
+            }
+        }
+        if (flag == 1) break;
+        //旋转
+        left++;
+    }
+
+    if (flag == 1) return true;
+    else return false;
+}
