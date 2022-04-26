@@ -1,0 +1,53 @@
+题目：
+给你一个字符串 s，找到 s 中最长的回文子串。
+
+示例 1：
+输入：s = "babad"
+输出："bab"
+解释："aba" 同样是符合题意的答案。
+
+示例 2：
+输入：s = "cbbd"
+输出："bb"
+ 
+提示：
+1 <= s.length <= 1000
+s 仅由数字和英文字母组成
+
+代码：
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        int n = s.size();//input length
+
+        if (n < 2) return s;//length = 1 must be correct
+
+        int maxLen = 1;//max Length
+        int begin = 0;//start position
+        vector<vector<int>>  dp(n, vector<int>(n));//judge whether palindromic substring
+
+        for (int i = 0; i < n; i++) dp[i][i] = true;//init
+
+        for (int L = 2; L <= n; L++)
+        {
+            for (int i = 0; i < n; i++)
+            {
+                int j = L + i - 1;//right side
+                if (j >= n) break;//right side overflow
+
+                if (s[i] != s[j]) dp[i][j] = false;//if not equal, false
+                else {
+                    if (j - i < 3) dp[i][j] = true;//bound situation
+                    else dp[i][j] = dp[i + 1][j - 1];//recursion formula
+                }
+
+                if (dp[i][j] && j - i + 1 > maxLen) { //judge max length and record
+                    maxLen = j - i + 1;//record max length
+                    begin = i;//record begin position
+                }
+            }
+        }
+
+        return s.substr(begin, maxLen);//return palindromic substring
+    }
+};
